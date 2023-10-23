@@ -1,0 +1,21 @@
+groups:
+  - id: contrast.resource
+    type: resource
+    brief: "contrast defined resources for observability data"
+    attributes:
+      - id: deployment
+        requirement_level: required
+        brief: "deployment environment"
+        type:
+          allow_custom_values: false
+          members:
+            - id: qa
+              value: 'qa'
+              brief: "quality assurance environment"
+            - id: dev
+              value: 'dev'
+              brief: "development environment"
+            - id: prod
+              value: 'prod'
+              brief: "production environment"
+
