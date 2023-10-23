@@ -1,0 +1,48 @@
+groups:
+  - id: attributes.contrast.action
+    type: attribute_group
+    brief: "Describes attributes for Contrast Action metrics"
+    attributes:
+      - id: contrast.action.type
+        brief: >
+          The type of action that was observed.
+        requirement_level: required
+        examples: "file-open-create"
+        type:
+          allow_custom_values: false
+          members:
+            - id: file-open-create
+              value: 'file-open-create'
+              brief: "file open or create action"
+            - id: el-execution
+              value: 'el-execution'
+              brief: "spring expression language execution"
+
+      - id: contrast.service.type
+        brief: >
+          The type of service this action was observed on. This value gives an indication
+          of what other attributes will be part of this metric.
+        requirement_level: required
+        examples: "http"
+        type:
+          allow_custom_values: false
+          members:
+            - id: http
+              value: 'http'
+              brief: "http protocol type of service"
+            - id: messaging
+              value: 'messaging'
+              brief: "messaging type of service"
+            - id: rpc
+              value: 'rpc'
+              brief: "Remote Procedure Call type of service"
+
+  - id: metric.service.action.total
+    type: metric
+    metric_name: service.action.total
+    unit: "{action}"
+    brief: "A counter of actions for contrast"
+    instrument: counter
+    attributes:
+      - ref: contrast.action.type
+      - ref: contrast.service.type
