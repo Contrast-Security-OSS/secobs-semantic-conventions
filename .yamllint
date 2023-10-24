@@ -1,5 +1,9 @@
 extends: default
 
+# For all rules
+ignore: |
+  node_modules/
+
 rules:
   document-start: disable
   octal-values: enable
