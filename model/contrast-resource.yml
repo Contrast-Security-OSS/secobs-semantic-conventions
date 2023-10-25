@@ -3,6 +3,12 @@ groups:
     type: resource
     brief: "contrast defined resources for observability data"
     attributes:
+      - id: contrast.semconv.version
+        requirement_level: required
+        brief: The version of contrast semantic conventions that the data adheres to.
+        type: string
+        examples:
+          - "0.1.0"
       - id: deployment
         requirement_level: required
         brief: "deployment environment"
