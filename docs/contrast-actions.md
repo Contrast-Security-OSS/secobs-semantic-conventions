@@ -1,11 +1,12 @@
-# metric.service.action.total
-<!-- semconv metric.service.action.total(full) -->
+# http.server.action.total
+<!-- semconv metric.http.server.action.total(full) -->
 | Attribute  | Type | Description  | Examples  | Requirement Level |
 |---|---|---|---|---|
-| `contrast.action.type` | string | The type of action that was observed. | `file-open-create` | Required |
-| `contrast.service.type` | string | The type of service this action was observed on. This value gives an indication of what other attributes will be part of this metric. | `http` | Required |
+| `action` | string | The type of action that was observed. | `file-open-create` | Required |
+| `http.method` | string | http method used when the action was encountered. | `['GET', 'POST']` | Required |
+| `http.route` | string | http route used when the action was encountered. | `/foo/bar` | Required |
 
-`contrast.action.type` MUST be one of the following:
+`action` MUST be one of the following:
 
 | Value  | Description |
 |---|---|
@@ -21,12 +22,4 @@
 | `authz-request` | Functions that perform authorization  actions |
 | `el-execution` | Spring expression language execution |
 | `ognl-execution` | Object-Graph Navigation Language expression execution. |
-
-`contrast.service.type` MUST be one of the following:
-
-| Value  | Description |
-|---|---|
-| `http` | http protocol type of service |
-| `messaging` | messaging type of service |
-| `rpc` | Remote Procedure Call type of service |
 <!-- endsemconv -->

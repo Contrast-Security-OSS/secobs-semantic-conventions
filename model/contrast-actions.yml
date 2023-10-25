@@ -3,7 +3,19 @@ groups:
     type: attribute_group
     brief: "Describes attributes for Contrast Action metrics"
     attributes:
-      - id: contrast.action.type
+      - id: http.method
+        type: string
+        requirement_level: required
+        brief: >
+          http method used when the action was encountered.
+        examples: "['GET', 'POST']"
+      - id: http.route
+        type: string
+        requirement_level: required
+        brief: >
+          http route used when the action was encountered.
+        examples: "/foo/bar"
+      - id: action
         brief: >
           The type of action that was observed.
         requirement_level: required
@@ -48,31 +60,13 @@ groups:
               value: 'ognl-execution'
               brief: "Object-Graph Navigation Language expression execution."
 
-      - id: contrast.service.type
-        brief: >
-          The type of service this action was observed on. This value gives an indication
-          of what other attributes will be part of this metric.
-        requirement_level: required
-        examples: "http"
-        type:
-          allow_custom_values: false
-          members:
-            - id: http
-              value: 'http'
-              brief: "http protocol type of service"
-            - id: messaging
-              value: 'messaging'
-              brief: "messaging type of service"
-            - id: rpc
-              value: 'rpc'
-              brief: "Remote Procedure Call type of service"
-
-  - id: metric.service.action.total
+  - id: metric.http.server.action.total
     type: metric
-    metric_name: service.action.total
+    metric_name: http.server.action.total
     unit: "{action}"
     brief: "A counter of actions for contrast"
     instrument: counter
     attributes:
-      - ref: contrast.action.type
-      - ref: contrast.service.type
+      - ref: action
+      - ref: http.method
+      - ref: http.route
