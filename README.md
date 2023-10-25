@@ -1,10 +1,43 @@
 # Security Observability Semantic Conventions
 
-Contrast builds its observability on top of open telemetry and thus we add to the semantic
-conventions of otel.  This repo contains markup of the semantic convention definition for
-Contrast items.  It is in the same format as the normal otel semantic conventions and
-we use the same otel tools to process our semantic convention data.
+Semantic Conventions are metric and attribute names that are defined so that they
+mean the same thing to all parties producing and consuming the observability data.
+Raw timeseries and span data are stored in schemaless datastores and thus there is
+not a strictly defined schema file.  This design allows for agents to all be at
+various levels of support in what they produce for observability while the
+consumers of the data do the best with what they have.z
+
+The single source of truth of semantic convention definitions are the yaml
+files in the [model](./model) directory.
+The single source of truth for the semantic convention documentation are the
+markdown files in the [docs](./docs) directory.
+
+The semantic convention definitions are used to fill in table data in the
+semantic convention documentation. This is the same pattern as [opentelemetry's
+semantic-convention](https://github.com/open-telemetry/semantic-conventions) repo.
+Contrasts Security Observability builds on top of the existing semantic-conventions
+of opentelemetry and this secobs-semantic-conventions document should be
+interpreted as an addendum to the core opentelemtry semantic conventions standard.
+
+## Model Definition Files
+
+The model definition files have a particular schema associated to them that the
+opentelemetry [semconvgen](https://github.com/open-telemetry/build-tools/blob/v0.22.0/semantic-conventions/README.md)
+build tool interprets and processes. `semconvgen` is used to generate
+documentation data from the definition files.  Specific language agents can use
+these definition files to generate library code.
 
 Semantic Conventions for Security Observability.
 The model definitions use a syntax defined at
 [Semantic Convention YAML Language](https://raw.githubusercontent.com/open-telemetry/build-tools/v0.22.0/semantic-conventions/syntax.md)
+
+## Releases
+
+Semantic Conventions are versioned and the semantic version used by an agent is
+encoded as a Resource attribute. The backend will accept multiple semantic versions
+in use simultaneously by different agent instances.
+
+The Secobs Semantic Conventions version will encompass the version of the addendum
+here and the core semantic conventions version which is [v1.22.0](https://github.com/open-telemetry/semantic-conventions/releases/tag/v1.22.0)
+at the time of this
+writing.
