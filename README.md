@@ -41,3 +41,9 @@ The Secobs Semantic Conventions version will encompass the version of the addend
 here and the core semantic conventions version which is [v1.22.0](https://github.com/open-telemetry/semantic-conventions/releases/tag/v1.22.0)
 at the time of this
 writing.
+
+## Consuming the Semantic Convention Documentation
+
+The markdown documentation along with any generated table information from
+the definition files can be consumed by just pointing a browser to the [docs](./docs)
+directory in this repo.
