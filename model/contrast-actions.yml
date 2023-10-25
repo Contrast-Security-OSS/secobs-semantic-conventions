@@ -8,7 +8,9 @@ groups:
         requirement_level: required
         brief: >
           http method used when the action was encountered.
-        examples: "['GET', 'POST']"
+        examples:
+          - GET
+          - POST
       - id: http.route
         type: string
         requirement_level: required
@@ -19,7 +21,9 @@ groups:
         brief: >
           The type of action that was observed.
         requirement_level: required
-        examples: "file-open-create"
+        examples:
+          - file-open-create
+          - authn-request
         type:
           allow_custom_values: false
           members:

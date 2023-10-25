@@ -1,9 +1,24 @@
-# http.server.action.total
+# Semantic Conventions for Contrast Actions
+
+Actions are a concept for Security Observability. They are modeled as a metric
+so that actions are seen for every requests and collected in a scalable
+manner for the agent.  We will never miss an action on a particular execution path.
+The data used in the action is captured as attributes within a span.  Since
+capturing and processing spans is considered an expensive activity, this data is captured
+as part of a sampling activity.
+
+<!-- toc -->
+<!-- tocstop -->
+
+## Http Actions
+
+### Metric: `http.server.action.total`
+
 <!-- semconv metric.http.server.action.total(full) -->
 | Attribute  | Type | Description  | Examples  | Requirement Level |
 |---|---|---|---|---|
-| `action` | string | The type of action that was observed. | `file-open-create` | Required |
-| `http.method` | string | http method used when the action was encountered. | `['GET', 'POST']` | Required |
+| `action` | string | The type of action that was observed. | `file-open-create`; `authn-request` | Required |
+| `http.method` | string | http method used when the action was encountered. | `GET`; `POST` | Required |
 | `http.route` | string | http route used when the action was encountered. | `/foo/bar` | Required |
 
 `action` MUST be one of the following:
