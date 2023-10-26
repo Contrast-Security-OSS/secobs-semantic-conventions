@@ -1,7 +1,7 @@
 {
   "ignorePatterns": [
     {
-      "pattern": "^https://github\\.com/Contrast-Security-Inc/secobs-specification/(issues|pull)"
+      "pattern": "^https://github\\.com/Contrast-Security-Inc/secobs-semantic-conventions/(issues|pull)"
     }
   ],
   "replacementPatterns": [
