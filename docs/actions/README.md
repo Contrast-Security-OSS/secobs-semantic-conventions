@@ -8,6 +8,10 @@ capturing and processing spans is considered an expensive activity, this data is
 as part of a sampling activity.
 
 <!-- toc -->
+
+- [Http Actions](#http-actions)
+  * [Metric: `http.server.action.total`](#metric-httpserveractiontotal)
+
 <!-- tocstop -->
 
 ## Http Actions
