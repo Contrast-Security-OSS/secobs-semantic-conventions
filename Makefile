@@ -10,9 +10,17 @@ MISSPELL = $(TOOLS_DIR)/$(MISSPELL_BINARY)
 # Keep links in model/README.md and .vscode/settings.json in sync!
 SEMCONVGEN_VERSION=0.22.0
 
-# TODO: add `yamllint` step to `all` after making sure it works on Mac.
+# Contrast semantic specification builds on top of the otel semantic specification.
+# This is the version of the otel semconv that we adhere to.  New releases of
+# secobs-semantic-conventions may update the version of otel semantic conventions
+# it depends on.  Any language libraries that are generated from the secobs semantic
+# conventions should transitively offer the respective otel semantic convention
+# libraries so that consumers are always forced to be in sync.
+# see https://github.com/open-telemetry/semantic-conventions/releases
+OTEL_SEMCONV_VERSION=1.22.0
+
 .PHONY: all
-all: install-tools markdownlint markdown-link-check misspell table-check \
+all: install-tools markdownlint markdown-link-check yamllint misspell table-check \
 		 check-file-and-folder-names-in-docs
 
 .PHONY: check-file-and-folder-names-in-docs
