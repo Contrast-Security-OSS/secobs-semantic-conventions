@@ -10,9 +10,9 @@ various levels of support in what they produce for observability while the
 consumers of the data do the best with what they have.
 
 The single source of truth of semantic convention definitions are the yaml
-files in the [model](./model/) directory.
+files in the `model/` directory.
 The single source of truth for the semantic convention documentation are the
-markdown files in the [docs](./docs/) directory.
+markdown files in the `docs/` directory.
 
 The semantic convention definitions are used to fill in table data in the
 semantic convention documentation. This is the same pattern as [opentelemetry's
@@ -47,7 +47,7 @@ writing.
 ## Consuming the Semantic Convention Documentation
 
 The markdown documentation along with any generated table information from
-the definition files can be consumed by just pointing a browser to the [docs](./docs)
+the definition files can be consumed by just pointing a browser to the `docs/`
 directory in this repo.
 
 [SpecificationVersion]: https://github.com/open-telemetry/opentelemetry-specification/tree/v1.26.0
