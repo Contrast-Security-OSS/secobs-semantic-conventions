@@ -10,14 +10,14 @@ The benefit to using Semantic Conventions is in following a common naming
 scheme that can be standardized across a codebase, libraries, and platforms.
 This allows easier correlation and consumption of data.
 
-Contrast standardizes on otel metrics and extend from them.  See
+Contrast standardizes on otel metrics and extend from them. See
 [OTel Semantic Conventions](https://github.com/open-telemetry/semantic-conventions/tree/v1.22.0/docs)
 for a foundational understanding of what we build on top of.
 
 Security Observability Semantic Conventions are defined for the following areas:
 
-* [Actions](actions/README.md): Semantic Conventions for cloud providers libraries.
+- [Actions](actions/README.md): Semantic Conventions for cloud providers libraries.
 
 Semantic Conventions by signals:
 
-* [Resource](resource/README.md): Semantic Conventions for resources.
+- [Resource](resource/README.md): Semantic Conventions for resources.

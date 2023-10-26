@@ -1,11 +1,13 @@
 # Security Observability Semantic Conventions
 
+This repo is built on top of [this otel specification version][SpecificationVersion]
+
 Semantic Conventions are metric and attribute names that are defined so that they
 mean the same thing to all parties producing and consuming the observability data.
 Raw timeseries and span data are stored in schemaless datastores and thus there is
-not a strictly defined schema file.  This design allows for agents to all be at
+not a strictly defined schema file. This design allows for agents to all be at
 various levels of support in what they produce for observability while the
-consumers of the data do the best with what they have.z
+consumers of the data do the best with what they have.
 
 The single source of truth of semantic convention definitions are the yaml
 files in the [model](./model) directory.
@@ -24,7 +26,7 @@ interpreted as an addendum to the core opentelemtry semantic conventions standar
 The model definition files have a particular schema associated to them that the
 opentelemetry [semconvgen](https://github.com/open-telemetry/build-tools/blob/v0.22.0/semantic-conventions/README.md)
 build tool interprets and processes. `semconvgen` is used to generate
-documentation data from the definition files.  Specific language agents can use
+documentation data from the definition files. Specific language agents can use
 these definition files to generate library code.
 
 Semantic Conventions for Security Observability.
@@ -47,3 +49,5 @@ writing.
 The markdown documentation along with any generated table information from
 the definition files can be consumed by just pointing a browser to the [docs](./docs)
 directory in this repo.
+
+[SpecificationVersion]: https://github.com/open-telemetry/opentelemetry-specification/tree/v1.26.0
