@@ -10,7 +10,7 @@ as part of a sampling activity.
 <!-- toc -->
 
 - [Http Actions](#http-actions)
-  - [Metric: `http.server.action.total`](#metric-httpserveractiontotal)
+  * [Metric: `http.server.action.total`](#metric-httpserveractiontotal)
 
 <!-- tocstop -->
 
