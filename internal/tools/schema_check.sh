@@ -2,14 +2,14 @@
 
 # This script does some minimal sanity checks of schema files.
 # It expects to find a schema file for each version listed in CHANGELOG.md
-# since 1.0.0 release.
+# since 0.1.0 release.
 
 set -e
 
 BUILD_TOOL_SCHEMAS_VERSION=0.22.0
 
 # List of versions that do not require or have a schema.
-declare -a skip_versions=("1.0.0" "1.0.1" "1.1.0" "1.2.0" "1.3.0" "1.6.0")
+declare -a skip_versions=()
 
 # Verifies remote avilability of a schema file.
 #
@@ -22,8 +22,8 @@ declare -a skip_versions=("1.0.0" "1.0.1" "1.1.0" "1.2.0" "1.3.0" "1.6.0")
 # 1 - version number
 verify_remote_availability() {
   local ver="$1"
-  echo -n "Ensure published schema file https://opentelemetry.io/schemas/$ver matches local copy... "
-  if curl --fail --no-progress-meter https://opentelemetry.io/schemas/$ver > verify$ver 2>/dev/null; then
+  echo -n "Ensure published schema file https://github.com/Contrast-Security-OSS/secobs-semantic-conventions/releases/download/v$ver/$ver matches local copy... "
+  if curl -L --fail --no-progress-meter https://github.com/Contrast-Security-OSS/secobs-semantic-conventions/releases/download/v$ver/$ver > verify$ver; then
     diff verify$ver $file && echo "OK, matches" \
       || (echo "Incorrect!" && exit 3)
   else
@@ -54,8 +54,8 @@ verify_local_availability() {
 root_dir=$PWD
 schemas_dir=$root_dir/schemas
 
-# Find all version sections in CHANGELOG that start with a number in 1..9 range.
-grep -o -e '## v[1-9].*\s' $root_dir/CHANGELOG.md | grep -o '[1-9].*' | while read ver; do
+# Find all version sections in CHANGELOG that start with a number in 0..9 range.
+grep -o -e '## v[0-9].*\s' $root_dir/CHANGELOG.md | grep -o '[0-9].*' | while read ver; do
   if [[ " ${skip_versions[*]} " == *" $ver "* ]]; then
     # Skip this version, it does not need a schema file.
     continue
@@ -66,7 +66,7 @@ grep -o -e '## v[1-9].*\s' $root_dir/CHANGELOG.md | grep -o '[1-9].*' | while re
 done
 
 # Now check the content of all schema files in the ../schemas directory.
-for file in `ls -1 $schemas_dir`; do
+for file in $schemas_dir/*; do
   # Filename is the version number.
   ver=$(basename $file)
 
@@ -79,13 +79,16 @@ for file in `ls -1 $schemas_dir`; do
   fi
 
   # Check that the schema_url matches the version.
-  if ! grep -q "schema_url: https://opentelemetry.io/schemas/$ver" $file; then
+  if ! grep -q "schema_url: https://github.com/Contrast-Security-OSS/secobs-semantic-conventions/releases/download/v$ver/$ver" $file; then
     echo "FAILED: schema_url is not found in $file"
     exit 2
   fi
 
-  docker run -v $schemas_dir:/schemas \
-  		otel/build-tool-schemas:$BUILD_TOOL_SCHEMAS_VERSION --file /schemas/$ver --version=$ver
+# disabling this because the build-tool-schemas is hardcoded to check to
+# opentelemetry.io hosts and paths in the document.
+#
+#  docker run -v $schemas_dir:/schemas \
+#  		otel/build-tool-schemas:$BUILD_TOOL_SCHEMAS_VERSION --file /schemas/$ver --version=$ver
 
   echo "OK"
 done
