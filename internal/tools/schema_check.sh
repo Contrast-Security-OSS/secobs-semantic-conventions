@@ -66,7 +66,7 @@ grep -o -e '## v[1-9].*\s' $root_dir/CHANGELOG.md | grep -o '[1-9].*' | while re
 done
 
 # Now check the content of all schema files in the ../schemas directory.
-for file in `ls -1 $schemas_dir`; do
+for file in $schemas_dir/*; do
   # Filename is the version number.
   ver=$(basename $file)
 
