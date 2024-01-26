@@ -1,5 +1,14 @@
 # Contrast Action Spans
 
+<!-- toc -->
+
+- [Definitions](#definitions)
+- [Action Span Attributes](#action-span-attributes)
+  - [Authentication Span](#authentication-span)
+  - [Authorization Span](#authorization-span)
+
+<!-- tocstop -->
+
 ## Definitions
 
 The span name MUST be set to the action name:
