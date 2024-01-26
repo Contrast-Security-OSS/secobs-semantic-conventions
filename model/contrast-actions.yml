@@ -1,22 +1,8 @@
 groups:
-  - id: attributes.contrast.action
+  - id: attributes.contrast.actions
     type: attribute_group
-    brief: "Describes attributes for Contrast Action metrics"
+    brief: "Actions that we track in Contrast"
     attributes:
-      - id: http.method
-        type: string
-        requirement_level: required
-        brief: >
-          http method used when the action was encountered.
-        examples:
-          - GET
-          - POST
-      - id: http.route
-        type: string
-        requirement_level: required
-        brief: >
-          http route used when the action was encountered.
-        examples: "/foo/bar"
       - id: action
         brief: >
           The type of action that was observed.
@@ -64,6 +50,25 @@ groups:
               value: "ognl-execution"
               brief: "Object-Graph Navigation Language expression execution."
 
+  - id: attributes.contrast.action.metric
+    type: attribute_group
+    brief: "Describes attributes for Contrast Action metrics"
+    attributes:
+      - id: http.method
+        type: string
+        requirement_level: required
+        brief: >
+          http method used when the action was encountered.
+        examples:
+          - GET
+          - POST
+      - id: http.route
+        type: string
+        requirement_level: required
+        brief: >
+          http route used when the action was encountered.
+        examples: "/foo/bar"
+
   - id: metric.http.server.action.total
     type: metric
     metric_name: http.server.action.total
@@ -76,7 +81,7 @@ groups:
       - ref: http.route
 
   - id: attributes.contrast.action.span.authn
-    prefix: authentication
+    prefix: contrast.authentication
     type: span
     brief: "Describes attributes for Contrast Action span of type authn-request"
     attributes:
@@ -84,8 +89,7 @@ groups:
         brief: >
           An authentication mechanism is a specific method or approach used to
           verify the identity of a user, system, or entity attempting to access a resource.
-        examples:
-          [password, token, biometric]
+        examples: [password, token, biometric]
         type:
           allow_custom_values: false
           members:
@@ -94,7 +98,7 @@ groups:
               brief: "Users provide a username and password."
             - id: certificate
               value: "certificate"
-              brief: "x509 certificate authentication or similar" 
+              brief: "x509 certificate authentication or similar"
             - id: token
               value: "token"
               brief: "Involves using a physical or virtual token to authenticate a user"
@@ -110,8 +114,7 @@ groups:
           An authentication protocol is a set of rules and procedures that
           dictate how authentication mechanisms should operate to establish
           trust and verify identities securely.
-        examples:
-          [oauth, saml, ldap, custom]
+        examples: [oauth, saml, ldap, custom]
         type:
           allow_custom_values: false
           members:
@@ -127,13 +130,83 @@ groups:
             - id: kerberos
               value: "kerberos"
               brief: ""
-            - id: custom
-              value: "custom"
-              brief: "A custom implementation is being used and the protocol cannot be determined"
+
+  - id: attributes.contrast.action.span.authz
+    prefix: contrast.authorization
+    type: span
+    brief: >
+      Describes attributes for Contrast Action span of type authz-request
+    attributes:
+      - id: mechanism
+        brief: >
+          How are authz decisions made for the resource.
+        examples: [rbac, dac, pbac]
+        type:
+          allow_custom_values: false
+          members:
+            - id: rbac
+              value: "rbac"
+              brief: Role Based Access Control
+            - id: abac
+              value: "abac"
+              brief: Attribute Based Access Control
+            - id: mac
+              value: "mac"
+              brief: Mandatory Access Control (MAC) is a security model where access to resources is determined by the security labels assigned to subjects (users or processes) and objects (resources).
+            - id: dac
+              value: "dac"
+              brief: Discretionary Access Control (DAC) is a model where owners of resources have the discretion to control access to their resources.
+            - id: pbac
+              value: "pbac"
+              brief: Policy Based Access Control
+            - id: hbac
+              value: "hbac"
+              brief: History Based Access Control
+            - id: tbac
+              value: "tbac"
+              brief: Time Based Access Control
+            - id: pbac
+              value: "pbac"
+              brief: Policy Based Access Control
+
+      - id: rbac.role
+        brief: >
+          Role Requested for authz check. The values here are very domain specific, but
+          will always be normalized to a lowercase value in the data here.
+        examples: [user, editor, manager]
+        type: string
+      - id: dac.permission
+        brief: >
+          Permission requested for access to the resource. The values here are very domain specific, but
+          will always be normalized to a lowercase value in the data here.
+        examples: [read, write, append, delete]
+        type: string
+      - id: mac.labels
+        brief: >
+          Labels on the requested resource. The values here are very domain specific, but
+          will always be normalized to a lowercase value in the data here.
+        examples: [top_secret, confidential, internal, public]
+        type: string
 
   - id: contrast.action.span.authn
     type: span
-    brief: "Describes attributes for Contrast Action spans"
+    brief: "Describes attributes for Contrast Authentication Action spans"
     attributes:
-      - ref: authentication.mechanism
-      - ref: authentication.protocol
+      - ref: contrast.authentication.mechanism
+      - ref: contrast.authentication.protocol
+
+  - id: contrast.action.span.authz
+    type: span
+    brief: "Describes attributes for Contrast Authorization Action spans"
+    attributes:
+      - ref: contrast.authorization.mechanism
+        requirement_level: recommended
+      - ref: contrast.authorization.rbac.role
+        requirement_level:
+          recommended: If mechanism is 'rbac'
+      - ref: contrast.authorization.dac.permission
+        requirement_level:
+          recommended: If mechanism is 'dac'
+      - ref: contrast.authorization.mac.labels
+        requirement_level:
+          recommended: If mechanism is 'mac'
