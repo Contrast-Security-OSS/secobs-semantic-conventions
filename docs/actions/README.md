@@ -38,7 +38,7 @@ as part of a sampling activity.
 | `smtp-exec` | Functions that result in an SMTP command execution |
 | `outbound-service-call` | Functions that result in external calls to other services |
 | `authn-request` | Functions that perform authentication actions |
-| `authz-request` | Functions that perform authorization  actions |
+| `authz-request` | Functions that perform authorization actions |
 | `el-execution` | Spring expression language execution |
 | `ognl-execution` | Object-Graph Navigation Language expression execution. |
 <!-- endsemconv -->

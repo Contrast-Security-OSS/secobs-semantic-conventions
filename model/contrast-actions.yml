@@ -56,7 +56,7 @@ groups:
               brief: "Functions that perform authentication actions"
             - id: authz-request
               value: "authz-request"
-              brief: "Functions that perform authorization  actions"
+              brief: "Functions that perform authorization actions"
             - id: el-execution
               value: "el-execution"
               brief: "Spring expression language execution"
@@ -74,3 +74,66 @@ groups:
       - ref: action
       - ref: http.method
       - ref: http.route
+
+  - id: attributes.contrast.action.span.authn
+    prefix: authentication
+    type: span
+    brief: "Describes attributes for Contrast Action span of type authn-request"
+    attributes:
+      - id: mechanism
+        brief: >
+          An authentication mechanism is a specific method or approach used to
+          verify the identity of a user, system, or entity attempting to access a resource.
+        examples:
+          [password, token, biometric]
+        type:
+          allow_custom_values: false
+          members:
+            - id: password
+              value: "password"
+              brief: "Users provide a username and password."
+            - id: certificate
+              value: "certificate"
+              brief: "x509 certificate authentication or similar" 
+            - id: token
+              value: "token"
+              brief: "Involves using a physical or virtual token to authenticate a user"
+            - id: biometric
+              value: "biometric"
+              brief: "file open or create action"
+            - id: mfa
+              value: "mfa"
+              brief: "Two or more of the above mechanisms are used"
+
+      - id: protocol
+        brief: >
+          An authentication protocol is a set of rules and procedures that
+          dictate how authentication mechanisms should operate to establish
+          trust and verify identities securely.
+        examples:
+          [oauth, saml, ldap, custom]
+        type:
+          allow_custom_values: false
+          members:
+            - id: saml
+              value: "saml"
+              brief: "Security Assertion Markup Language"
+            - id: oauth
+              value: "oauth"
+              brief: "Open Authentication and OIDC"
+            - id: ldap
+              value: "ldap"
+              brief: "Lightweight Directory Access Protocol"
+            - id: kerberos
+              value: "kerberos"
+              brief: ""
+            - id: custom
+              value: "custom"
+              brief: "A custom implementation is being used and the protocol cannot be determined"
+
+  - id: contrast.action.span.authn
+    type: span
+    brief: "Describes attributes for Contrast Action spans"
+    attributes:
+      - ref: authentication.mechanism
+      - ref: authentication.protocol
