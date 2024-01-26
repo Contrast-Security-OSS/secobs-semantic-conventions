@@ -1,4 +1,4 @@
-# Messaging Systems
+# Contrast Action Spans
 
 ## Definitions
 
@@ -37,7 +37,14 @@ Valid action names are are listed in the action attribute for metrics:
 
 ## Action Span Attributes
 
-### Authentication
+Each Action Span has attributes that describe the action observed. For instance, an `authn-request` span
+will list the authentication mechanism along with other authentication-related attributes
+An action span for the `storage-query` action will have a different set of attributes
+targeted toward describing that action.
+
+### Authentication Span
+
+Used when span name is `authn-request`
 
 <!-- semconv contrast.action.span.authn(full) -->
 
@@ -67,7 +74,9 @@ Valid action names are are listed in the action attribute for metrics:
 
 <!-- endsemconv -->
 
-### Authorization
+### Authorization Span
+
+Used when span name is `authz-request`
 
 <!-- semconv contrast.action.span.authz(full) -->
 
