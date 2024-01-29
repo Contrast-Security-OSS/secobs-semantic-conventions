@@ -20,7 +20,7 @@ SEMCONVGEN_VERSION=0.22.0
 OTEL_SEMCONV_VERSION=1.22.0
 
 .PHONY: all
-all: install-tools markdownlint markdown-link-check yamllint misspell table-check \
+all: install-tools markdown-toc table-generation fix-format check yamllint \
 		 check-file-and-folder-names-in-docs
 
 .PHONY: check-file-and-folder-names-in-docs

@@ -152,7 +152,9 @@ groups:
               brief: Attribute Based Access Control
             - id: mac
               value: "mac"
-              brief: Mandatory Access Control (MAC) is a security model where access to resources is determined by the security labels assigned to subjects (users or processes) and objects (resources).
+              brief: >
+                Mandatory Access Control (MAC) is a security model where access to resources is determined by
+                the security labels assigned to subjects (users or processes) and objects (resources).
             - id: dac
               value: "dac"
               brief: Discretionary Access Control (DAC) is a model where owners of resources have the discretion to control access to their resources.
