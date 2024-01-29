@@ -10,8 +10,8 @@ as part of a sampling activity.
 <!-- toc -->
 
 - [Actions](#actions)
-  * [Metric: `http.server.action.total`](#metric-httpserveractiontotal)
-  * [Spans](#spans)
+  - [Metric: `http.server.action.total`](#metric-httpserveractiontotal)
+  - [Spans](#spans)
 
 <!-- tocstop -->
 
