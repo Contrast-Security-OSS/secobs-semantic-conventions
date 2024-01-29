@@ -4,8 +4,8 @@
 
 - [Definitions](#definitions)
 - [Action Span Attributes](#action-span-attributes)
-  - [Authentication Span](#authentication-span)
-  - [Authorization Span](#authorization-span)
+  * [Authentication Span](#authentication-span)
+  * [Authorization Span](#authorization-span)
 
 <!-- tocstop -->
 
