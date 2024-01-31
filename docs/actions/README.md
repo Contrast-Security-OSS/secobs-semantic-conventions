@@ -9,19 +9,20 @@ as part of a sampling activity.
 
 <!-- toc -->
 
-- [Http Actions](#http-actions)
+- [Actions](#actions)
   * [Metric: `http.server.action.total`](#metric-httpserveractiontotal)
+  * [Spans](#spans)
 
 <!-- tocstop -->
 
-## Http Actions
+## Actions
 
 ### Metric: `http.server.action.total`
 
 <!-- semconv metric.http.server.action.total(full) -->
 | Attribute  | Type | Description  | Examples  | Requirement Level |
 |---|---|---|---|---|
-| `action` | string | The type of action that was observed. | `file-open-create`; `authn-request` | Required |
+| [`action`](action-spans.md) | string | The type of action that was observed. | `file-open-create`; `authn-request` | Required |
 | `http.method` | string | http method used when the action was encountered. | `GET`; `POST` | Required |
 | `http.route` | string | http route used when the action was encountered. | `/foo/bar` | Required |
 
@@ -38,7 +39,11 @@ as part of a sampling activity.
 | `smtp-exec` | Functions that result in an SMTP command execution |
 | `outbound-service-call` | Functions that result in external calls to other services |
 | `authn-request` | Functions that perform authentication actions |
-| `authz-request` | Functions that perform authorization  actions |
+| `authz-request` | Functions that perform authorization actions |
 | `el-execution` | Spring expression language execution |
 | `ognl-execution` | Object-Graph Navigation Language expression execution. |
 <!-- endsemconv -->
+
+### Spans
+
+- [Action Spans](action-spans.md): Semantic Conventions for Action _spans_.

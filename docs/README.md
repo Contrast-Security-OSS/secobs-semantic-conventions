@@ -16,7 +16,7 @@ for a foundational understanding of what we build on top of.
 
 Security Observability Semantic Conventions are defined for the following areas:
 
-- [Actions](actions/README.md): Semantic Conventions for cloud providers libraries.
+- [Actions](actions/README.md): Semantic Conventions for actions.
 
 Semantic Conventions by signals:
 
