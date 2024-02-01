@@ -102,5 +102,4 @@ Used when span name is `authz-request`
 | `pbac` | Policy Based Access Control |
 | `hbac` | History Based Access Control |
 | `tbac` | Time Based Access Control |
-| `pbac` | Policy Based Access Control |
 <!-- endsemconv -->
