@@ -2,12 +2,20 @@
 
 ## Unreleased
 
-- add definitions for authentication and authorization actions.
-  ([#1](https://github.com/Contrast-Security-OSS/secobs-semantic-conventions/pull/2))
+### Breaking
+
+### Features
+
+### Fixes
+
+## v0.2.0 (2024-01-31)
 
 ## Breaking
 
 ## Features
+
+- add definitions for authentication and authorization actions.
+  ([#1](https://github.com/Contrast-Security-OSS/secobs-semantic-conventions/pull/2))
 
 ## Fixes
 

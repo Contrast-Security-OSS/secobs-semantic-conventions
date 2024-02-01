@@ -3,3 +3,4 @@ schema_url: https://opentelemetry.io/schemas/next
 versions:
   next:
   0.2.0:
+  0.1.0:
