@@ -1,5 +1,5 @@
 file_format: 1.1.0
-schema_url: https://opentelemetry.io/schemas/next
+schema_url: https://github.com/Contrast-Security-OSS/secobs-semantic-conventions/releases/download/v0.2.0/0.2.0
 versions:
   next:
   0.2.0:
