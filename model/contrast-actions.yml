@@ -167,9 +167,6 @@ groups:
             - id: tbac
               value: "tbac"
               brief: Time Based Access Control
-            - id: pbac
-              value: "pbac"
-              brief: Policy Based Access Control
 
       - id: rbac.role
         brief: >
