@@ -14,10 +14,8 @@ Contrast standardizes on otel metrics and extend from them. See
 [OTel Semantic Conventions](https://github.com/open-telemetry/semantic-conventions/tree/v1.22.0/docs)
 for a foundational understanding of what we build on top of.
 
-Security Observability Semantic Conventions are defined for the following areas:
-
-- [Actions](actions/README.md): Semantic Conventions for actions.
-
 Semantic Conventions by signals:
 
 - [Resource](resource/README.md): Semantic Conventions for resources.
+- [Trace](general/trace.md): Semantic Conventions for traces and spans.
+- [Metrics](general/metrics.md): Semantic Conventions for metrics.

@@ -209,3 +209,100 @@ groups:
       - ref: contrast.authorization.mac.labels
         requirement_level:
           recommended: If mechanism is 'mac'
+
+  - id: contrast.action.span.file-open-create
+    prefix: file.open
+    type: span
+    brief: >
+      Describes attributes for Contrast Action span of type file-open-create.
+    attributes:
+      - id: path
+        brief: >
+          The absolute path that was accessed.
+        requirement_level: required
+        examples: [/etc/myconfig, /foo/bar, /some/tmp]
+        type: string
+      - id: flags
+        brief: >
+          The flags used when the file was opened or created.
+        requirement_level: recommended
+        examples: [o_rdonly, o_rdwr]
+        type:
+          allow_custom_values: false
+          members:
+            - id: o_rdonly
+              value: o_rdonly
+              brief: Read only access
+            - id: o_wronly
+              value: o_wronly
+              brief: Write only access
+            - id: o_rdwr
+              value: o_rdwr
+              brief: Read/write access
+  - id: contrast.action.span.host-cmd-exec
+    type: span
+    brief: >
+      Describes attributes for Contrast Action span of type host-cmd-exec.
+    attributes:
+      - id: cmd
+        brief: >
+          String of executed command with its arguments.
+        requirement_level: required
+        examples: [ls /foo, bash -c somebin, chmod 755 foobar]
+        type: string
+  - id: contrast.action.span.outbound-service-call
+    type: span
+    brief: >
+      Describes attributes for Contrast Action span of type outbound-service-call.
+      These actions are always using the http protocol.
+    attributes:
+      - id: http.request.method
+        brief: HTTP request method.
+        type: string
+        requirement_level: required
+        note: >
+           HTTP request method value SHOULD be “known” to the instrumentation.
+           By default, this convention defines “known” methods as the ones
+           listed in [RFC9110](https://www.rfc-editor.org/rfc/rfc9110.html#name-methods)
+           and the PATCH method defined in
+           [RFC5789](https://www.rfc-editor.org/rfc/rfc5789.html).
+        examples: [POST, GET, DELETE]
+      - id: http.response.status_code
+        type: int
+        brief: "[HTTP response status code](https://datatracker.ietf.org/doc/html/rfc7231#section-6)."
+        requirement_level:
+          conditionally_required: if and only if one was received.
+      - id: network.protocol.version
+        brief: Version of the http protocol used.
+        requirement_level: recommended
+        type: string
+        examples: ["1.0", "1.1", "2", "3"]
+        note: >
+          network.protocol.version refers to the version of the protocol used
+          and might be different from the protocol client’s version. If the
+          HTTP client has a version of 0.27.2, but sends HTTP version 1.1, this
+          attribute should be set to 1.1.
+      - id: network.peer.address
+        brief: >
+          Peer address of the network connection - IP address or Unix domain socket name.
+        requirement_level: recommended
+        type: string
+        examples: ["10.1.2.80", /tmp/my.sock]
+      - id: network.peer.port
+        brief: Peer port number of the network connection.
+        requirement_level: 
+          recommended: if `network.peer.address` populated
+        type: int
+        examples: [80, 8080, 443]
+      - id: server.address
+        brief: >
+          Name of the remotely connected host.
+        requirement_level: required
+        examples: [example.com, "10.1.2.80", /tmp/my.sock]
+        type: string
+      - id: server.port
+        brief: >
+          	Port identifier of the [“URI origin”](https://www.rfc-editor.org/rfc/rfc9110.html#name-uri-origin) HTTP request is sent to.
+        requirement_level: required
+        examples: [80, 8080, 443]
+        type: int
