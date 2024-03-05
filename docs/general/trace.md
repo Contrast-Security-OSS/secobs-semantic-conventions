@@ -9,4 +9,4 @@ as resonable guided by the OTEL specification.
 
 The following semantic conventions for Contrast Spans are defined:
 
-* [Actions](actions/action-spans.md): For spans describing Contrast Actions.
+* [Actions](../actions/action-spans.md): For spans describing Contrast Actions.
