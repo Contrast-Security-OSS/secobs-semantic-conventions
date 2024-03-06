@@ -1,9 +1,12 @@
 # Semantic Conventions for Action Metrics
 
-Actions occur within the context of an Web Application. These applications are
-served up via an http server.
+Actions occur within the context of an Web Application.
 
-## Metric: `http.server.action.total`
+## HTTP Server
+
+Applications that are served from an HTTP server.
+
+### Metric: `http.server.action.total`
 
 This metric is required.
 
@@ -16,7 +19,7 @@ This metric is required.
 <!-- semconv metric.http.server.action.total(full) -->
 | Attribute  | Type | Description  | Examples  | Requirement Level |
 |---|---|---|---|---|
-| [`action`](action-spans.md) | string | The type of action that was observed. | `file-open-create`; `authn-request` | Required |
+| `action` | string | The type of action that was observed. | `file-open-create`; `authn-request` | Required |
 | `http.method` | string | http method used when the action was encountered. | `GET`; `POST` | Required |
 | `http.route` | string | http route used when the action was encountered. | `/foo/bar` | Required |
 

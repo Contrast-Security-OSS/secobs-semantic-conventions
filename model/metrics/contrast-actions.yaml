@@ -50,6 +50,7 @@ groups:
               value: "ognl-execution"
               brief: "Object-Graph Navigation Language expression execution."
   - id: attributes.contrast.action.metric
+    extends: attributes.contrast.actions
     type: attribute_group
     brief: "Describes attributes for Contrast Action metrics"
     attributes:
@@ -69,11 +70,8 @@ groups:
         examples: "/foo/bar"
   - id: metric.http.server.action.total
     type: metric
+    extends: attributes.contrast.action.metric
     metric_name: http.server.action.total
     unit: "{action}"
     brief: "A counter of actions for contrast"
     instrument: counter
-    attributes:
-      - ref: action
-      - ref: http.method
-      - ref: http.route
