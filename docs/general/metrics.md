@@ -9,4 +9,4 @@ as resonable guided by the OTEL specification.
 
 The following semantic conventions for Contrast metrics are defined:
 
-<!-- * [Actions](actions/action-metrics.md): For metrics describing Contrast Actions. -->
+* [Actions](../actions/action-metrics.md): For metrics describing Contrast Actions.

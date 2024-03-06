@@ -3,47 +3,26 @@
 Actions are a concept for Security Observability. They are modeled as a metric
 so that actions are seen for every requests and collected in a scalable
 manner for the agent. We will never miss an action on a particular execution path.
-The data used in the action is captured as attributes within a span. Since
-capturing and processing spans is considered an expensive activity, this data is captured
-as part of a sampling activity.
+
+The data used in the action is captured as attributes within a span of a trace. Since capturing and processing spans is considered an expensive activity, this data is captured as part of a sampling activity.
+
+Information in traces allow us to construct an action graph of the execution ordering and also gives us the same data used within an action. However, since they are sampled, its possible to miss some execution paths that execute other actions.  Metrics contain what actions have occurred on an endpoint and are captured for every request, thus they will never miss a particular action.  This fidelity comes at a cost however in that metrics will not contain data used in an
+action nor will it contain enough information to determine the action execution order.
 
 <!-- toc -->
 
 - [Actions](#actions)
-  * [Metric: `http.server.action.total`](#metric-httpserveractiontotal)
+  * [Metrics](#metrics)
   * [Spans](#spans)
 
 <!-- tocstop -->
 
 ## Actions
 
-### Metric: `http.server.action.total`
+### Metrics
 
-<!-- semconv metric.http.server.action.total(full) -->
-| Attribute  | Type | Description  | Examples  | Requirement Level |
-|---|---|---|---|---|
-| [`action`](action-spans.md) | string | The type of action that was observed. | `file-open-create`; `authn-request` | Required |
-| `http.method` | string | http method used when the action was encountered. | `GET`; `POST` | Required |
-| `http.route` | string | http route used when the action was encountered. | `/foo/bar` | Required |
-
-`action` MUST be one of the following:
-
-| Value  | Description |
-|---|---|
-| `storage-query` | Functions that execute queries |
-| `file-open-create` | file open or create action |
-| `url-forward` | Any function designed to forward a request to another URL |
-| `url-redirect` | Function that result in an http 302 redirect code sent to the client |
-| `host-cmd-exec` | system shell command execution |
-| `ldap-query` | Functions that result in and ldap query operation |
-| `smtp-exec` | Functions that result in an SMTP command execution |
-| `outbound-service-call` | Functions that result in external calls to other services |
-| `authn-request` | Functions that perform authentication actions |
-| `authz-request` | Functions that perform authorization actions |
-| `el-execution` | Spring expression language execution |
-| `ognl-execution` | Object-Graph Navigation Language expression execution. |
-<!-- endsemconv -->
+- [Action Metrics](action-metrics.md): Semantic Conventions for Action metrics.
 
 ### Spans
 
-- [Action Spans](action-spans.md): Semantic Conventions for Action _spans_.
+- [Action Spans](action-spans.md): Semantic Conventions for Action spans.
