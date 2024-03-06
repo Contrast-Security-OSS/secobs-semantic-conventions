@@ -8,6 +8,14 @@
 
 ### Fixes
 
+## v0.3.0 (2024-03-06)
+
+### Breaking
+
+### Features
+
+### Fixes
+
 - fix content gaps and layout. No specifications were changed
   ([#5](https://github.com/Contrast-Security-OSS/secobs-semantic-conventions/pull/5))
 
