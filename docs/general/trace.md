@@ -9,4 +9,6 @@ as resonable guided by the OTEL specification.
 
 The following semantic conventions for Contrast Spans are defined:
 
-* [Actions](../actions/action-spans.md): For spans describing Contrast Actions.
+- [General](attributes.md): General semantic attributes that may be used in describing different kinds of operations.
+- [Actions](../actions/action-spans.md): For spans describing Contrast Actions.
+- [HTTP](../http/http-spans.md): For HTTP client and server spans.

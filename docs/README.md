@@ -25,6 +25,7 @@ Semantic Conventions by signals:
 - [Trace](general/trace.md): Semantic Conventions for traces and spans.
 - [Metrics](general/metrics.md): Semantic Conventions for metrics.
 
-Semantic Conventions by technology:
+Semantic Conventions are defined for the following areas:
 
+- [General](general/README.md): General Semantic Conventions.
 - [Actions](actions/README.md): Semantic Conventions for Contrast Actions.

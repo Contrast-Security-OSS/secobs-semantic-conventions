@@ -143,22 +143,15 @@ SHOULD include the [application root](/docs/http/http-spans.md#http-server-defin
 
 **[5]:** `network.protocol.version` refers to the version of the protocol used and might be different from the protocol client's version. If the HTTP client used has a version of `0.27.2`, but sends HTTP version `1.1`, this attribute should be set to `1.1`.
 
-**[6]:** Determined by using the first of the following that applies
+**[6]:** See [Setting `server.address` and `server.port` attributes](/docs/http/http-spans.md#setting-serveraddress-and-serverport-attributes).
+> **Warning**
+> Since this attribute is based on HTTP headers, opting in to it may allow an attacker
+> to trigger cardinality limits, degrading the usefulness of the metric.
 
-- The [primary server name](/docs/http/http-spans.md#http-server-definitions) of the matched virtual host. MUST only
-  include host identifier.
-- Host identifier of the [request target](https://www.rfc-editor.org/rfc/rfc9110.html#target.resource)
-  if it's sent in absolute-form.
-- Host identifier of the `Host` header
-
-SHOULD NOT be set if only IP address is available and capturing name would require a reverse DNS lookup.
-
-**[7]:** Determined by using the first of the following that applies
-
-- Port identifier of the [primary server host](/docs/http/http-spans.md#http-server-definitions) of the matched virtual host.
-- Port identifier of the [request target](https://www.rfc-editor.org/rfc/rfc9110.html#target.resource)
-  if it's sent in absolute-form.
-- Port identifier of the `Host` header
+**[7]:** See [Setting `server.address` and `server.port` attributes](/docs/http/http-spans.md#setting-serveraddress-and-serverport-attributes).
+> **Warning**
+> Since this attribute is based on HTTP headers, opting in to it may allow an attacker
+> to trigger cardinality limits, degrading the usefulness of the metric.
 
 `error.type` has the following list of well-known values. If one of them applies, then the respective value MUST be used, otherwise a custom value MAY be used.
 
