@@ -1,85 +1,4 @@
 groups:
-  - id: attributes.contrast.actions
-    type: attribute_group
-    brief: "Actions that we track in Contrast"
-    attributes:
-      - id: action
-        brief: >
-          The type of action that was observed.
-        requirement_level: required
-        examples:
-          - file-open-create
-          - authn-request
-        type:
-          allow_custom_values: false
-          members:
-            - id: storage-query
-              value: "storage-query"
-              brief: "Functions that execute queries"
-            - id: file-open-create
-              value: "file-open-create"
-              brief: "file open or create action"
-            - id: url-forward
-              value: "url-forward"
-              brief: "Any function designed to forward a request to another URL"
-            - id: url-redirect
-              value: "url-redirect"
-              brief: "Function that result in an http 302 redirect code sent to the client"
-            - id: host-cmd-exec
-              value: "host-cmd-exec"
-              brief: "system shell command execution"
-            - id: ldap-query
-              value: "ldap-query"
-              brief: "Functions that result in and ldap query operation"
-            - id: smtp-exec
-              value: "smtp-exec"
-              brief: "Functions that result in an SMTP command execution"
-            - id: outbound-service-call
-              value: "outbound-service-call"
-              brief: "Functions that result in external calls to other services"
-            - id: authn-request
-              value: "authn-request"
-              brief: "Functions that perform authentication actions"
-            - id: authz-request
-              value: "authz-request"
-              brief: "Functions that perform authorization actions"
-            - id: el-execution
-              value: "el-execution"
-              brief: "Spring expression language execution"
-            - id: ognl-execution
-              value: "ognl-execution"
-              brief: "Object-Graph Navigation Language expression execution."
-
-  - id: attributes.contrast.action.metric
-    type: attribute_group
-    brief: "Describes attributes for Contrast Action metrics"
-    attributes:
-      - id: http.method
-        type: string
-        requirement_level: required
-        brief: >
-          http method used when the action was encountered.
-        examples:
-          - GET
-          - POST
-      - id: http.route
-        type: string
-        requirement_level: required
-        brief: >
-          http route used when the action was encountered.
-        examples: "/foo/bar"
-
-  - id: metric.http.server.action.total
-    type: metric
-    metric_name: http.server.action.total
-    unit: "{action}"
-    brief: "A counter of actions for contrast"
-    instrument: counter
-    attributes:
-      - ref: action
-      - ref: http.method
-      - ref: http.route
-
   - id: attributes.contrast.action.span.authn
     prefix: contrast.authentication
     type: span
@@ -209,3 +128,79 @@ groups:
       - ref: contrast.authorization.mac.labels
         requirement_level:
           recommended: If mechanism is 'mac'
+
+  - id: contrast.action.span.file-open-create
+    prefix: file.open
+    type: span
+    brief: >
+      Describes attributes for Contrast Action span of type file-open-create.
+    attributes:
+      - id: path
+        brief: >
+          The absolute path that was accessed.
+        requirement_level: required
+        examples: [/etc/myconfig, /foo/bar, /some/tmp]
+        type: string
+      - id: flags
+        brief: >
+          The flags used when the file was opened or created.
+        requirement_level: recommended
+        examples: [o_rdonly, o_rdwr]
+        type:
+          allow_custom_values: false
+          members:
+            - id: o_rdonly
+              value: o_rdonly
+              brief: Read only access
+            - id: o_wronly
+              value: o_wronly
+              brief: Write only access
+            - id: o_rdwr
+              value: o_rdwr
+              brief: Read/write access
+
+  - id: contrast.action.span.host-cmd-exec
+    type: span
+    brief: >
+      Describes attributes for Contrast Action span of type host-cmd-exec.
+    attributes:
+      - id: cmd
+        brief: >
+          String of executed command with its arguments.
+        requirement_level: required
+        examples: [ls /foo, bash -c somebin, chmod 755 foobar]
+        type: string
+
+  - id: contrast.action.span.outbound-service-call
+    type: span
+    extends: trace.http.client
+    brief: >
+      Describes attributes for Contrast Action span of type outbound-service-call.
+      These actions are always using the http protocol.
+
+  - id: attributes.contrast.code-exec
+    type: attribute_group
+    brief: Attributes that refer to code execution operations
+    attributes:
+      - id: code.contents
+        requirement_level: required
+        type: string
+        brief: The code representing the expression being executed.
+        examples: [
+          "#{'String1 ' + 'string2'}",
+          "#{20 - 1}",
+          "'Just a string value'.substring(5)"
+        ]
+  - id: contrast.action.span.el-execution
+    type: span
+    extends: attributes.contrast.code-exec
+    brief: >
+      Describes attributes for Contrast Action span of type el-execution. The Spring Expression Language (SpEL for short) is a
+      powerful expression language that supports querying and manipulating an object graph at runtime.
+  - id: contrast.action.span.ognl-execution
+    extends: attributes.contrast.code-exec
+    type: span
+    brief: >
+      Describes attributes for Contrast Action span of type ognl-execution. OGNL stands for Object-Graph Navigation Language.
+      It is an expression language for getting and setting properties of Java objects, plus other extras such as list projection
+      and selection and lambda expressions. You use the same expression for both getting and setting the value of a property.
