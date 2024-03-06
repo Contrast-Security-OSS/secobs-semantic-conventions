@@ -24,54 +24,37 @@ This span type represents an outbound HTTP request. There are two ways this can 
 <!-- semconv contrast.action.span.outbound-service-call(full) -->
 | Attribute  | Type | Description  | Examples  | Requirement Level |
 |---|---|---|---|---|
-| `http.request.method` | string | HTTP request method. [1] | `GET`; `POST`; `HEAD` | Recommended |
-| `http.response.status_code` | int | [HTTP response status code](https://tools.ietf.org/html/rfc7231#section-6). | `200` | Conditionally Required: if and only if one was received. |
-| `network.peer.address` | string | Peer address of the network connection - IP address or Unix domain socket name. | `10.1.2.80`; `/tmp/my.sock` | Recommended |
-| `network.peer.port` | int | Peer port number of the network connection. | `65123` | Recommended |
-| `network.protocol.version` | string | Version of the protocol specified in `network.protocol.name`. [2] | `3.1.1` | Recommended |
-| `server.address` | string | Name of the remotely connected host. [3] | `example.com`; `10.1.2.80`; `/tmp/my.sock` | Required |
-| `server.port` | int | Port identifier of the [“URI origin”](https://www.rfc-editor.org/rfc/rfc9110.html#name-uri-origin) HTTP request is sent to. [4] | `80`; `8080`; `443` | Required |
+| `http.resend_count` | int | The ordinal number of request resending attempt (for any reason, including redirects). [1] | `3` | Recommended: if and only if request was retried. |
+| [`network.peer.address`](../general/attributes.md) | string | Peer address of the network connection - IP address or Unix domain socket name. | `10.1.2.80`; `/tmp/my.sock` | Recommended: If different than `server.address`. |
+| [`network.peer.port`](../general/attributes.md) | int | Peer port number of the network connection. | `65123` | Recommended: If `network.peer.address` is set. |
+| [`server.address`](../general/attributes.md) | string | Host identifier of the ["URI origin"](https://www.rfc-editor.org/rfc/rfc9110.html#name-uri-origin) HTTP request is sent to. [2] | `example.com`; `10.1.2.80`; `/tmp/my.sock` | Required |
+| [`server.port`](../general/attributes.md) | int | Port identifier of the ["URI origin"](https://www.rfc-editor.org/rfc/rfc9110.html#name-uri-origin) HTTP request is sent to. [3] | `80`; `8080`; `443` | Conditionally Required: [4] |
 | `url.full` | string | Absolute URL describing a network resource according to [RFC3986](https://www.rfc-editor.org/rfc/rfc3986) [5] | `https://www.foo.bar/search?q=OpenTelemetry#SemConv`; `//localhost` | Required |
 
-**[1]:** HTTP request method value SHOULD be "known" to the instrumentation.
-By default, this convention defines "known" methods as the ones listed in [RFC9110](https://www.rfc-editor.org/rfc/rfc9110.html#name-methods)
-and the PATCH method defined in [RFC5789](https://www.rfc-editor.org/rfc/rfc5789.html).
+**[1]:** The resend count SHOULD be updated each time an HTTP request gets resent by the client, regardless of what was the cause of the resending (e.g. redirection, authorization failure, 503 Server Unavailable, network issues, or any other).
 
-If the HTTP request method is not known to instrumentation, it MUST set the `http.request.method` attribute to `_OTHER`.
+**[2]:** Determined by using the first of the following that applies
 
-If the HTTP instrumentation could end up converting valid HTTP request methods to `_OTHER`, then it MUST provide a way to override
-the list of known HTTP methods. If this override is done via environment variable, then the environment variable MUST be named
-OTEL_INSTRUMENTATION_HTTP_KNOWN_METHODS and support a comma-separated list of case-sensitive known HTTP methods
-(this list MUST be a full override of the default known method, it is not a list of known methods in addition to the defaults).
+- Host identifier of the [request target](https://www.rfc-editor.org/rfc/rfc9110.html#target.resource)
+  if it's sent in absolute-form
+- Host identifier of the `Host` header
 
-HTTP method names are case-sensitive and `http.request.method` attribute value MUST match a known HTTP method name exactly.
-Instrumentations for specific web frameworks that consider HTTP methods to be case insensitive, SHOULD populate a canonical equivalent.
-Tracing instrumentations that do so, MUST also set `http.request.method_original` to the original value.
+If an HTTP client request is explicitly made to an IP address, e.g. `http://x.x.x.x:8080`, then
+`server.address` SHOULD be the IP address `x.x.x.x`. A DNS lookup SHOULD NOT be used.
 
-**[2]:** `network.protocol.version` refers to the version of the protocol used and might be different from the protocol client's version. If the HTTP client used has a version of `0.27.2`, but sends HTTP version `1.1`, this attribute should be set to `1.1`.
+**[3]:** When [request target](https://www.rfc-editor.org/rfc/rfc9110.html#target.resource) is absolute URI, `server.port` MUST match URI port identifier, otherwise it MUST match `Host` header port identifier.
 
-**[3]:** If an HTTP client request is explicitly made to an IP address, e.g. `http://x.x.x.x:8080`, then server.address SHOULD be the IP address x.x.x.x. A DNS lookup SHOULD NOT be used.
-
-**[4]:** When observed from the client side, and when communicating through an intermediary, `server.port`` SHOULD represent the server port behind any intermediaries, for example proxies, if it’s available.
+**[4]:** If not default (`80` for `http` scheme, `443` for `https`).
 
 **[5]:** For network calls, URL usually has `scheme://host[:port][path][?query][#fragment]` format, where the fragment is not transmitted over HTTP, but if it is known, it should be included nevertheless.
 `url.full` MUST NOT contain credentials passed via URL in form of `https://username:password@www.example.com/`. In such case username and password should be redacted and attribute's value should be `https://REDACTED:REDACTED@www.example.com/`.
 `url.full` SHOULD capture the absolute URL when it is available (or can be reconstructed) and SHOULD NOT be validated or modified except for sanitizing purposes.
 
-`http.request.method` has the following list of well-known values. If one of them applies, then the respective value MUST be used, otherwise a custom value MAY be used.
+Following attributes MUST be provided **at span creation time** (when provided at all), so they can be considered for sampling decisions:
 
-| Value  | Description |
-|---|---|
-| `CONNECT` | CONNECT method. |
-| `DELETE` | DELETE method. |
-| `GET` | GET method. |
-| `HEAD` | HEAD method. |
-| `OPTIONS` | OPTIONS method. |
-| `PATCH` | PATCH method. |
-| `POST` | POST method. |
-| `PUT` | PUT method. |
-| `TRACE` | TRACE method. |
-| `_OTHER` | Any HTTP method that the instrumentation has no prior knowledge of. |
+* [`server.address`](../general/attributes.md)
+* [`server.port`](../general/attributes.md)
+* `url.full`
 <!-- endsemconv -->
 
 ## outbound-service-call (http client) span duration

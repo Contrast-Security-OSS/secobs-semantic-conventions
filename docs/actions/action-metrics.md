@@ -99,10 +99,10 @@ of `[ 0.005, 0.01, 0.025, 0.05, 0.075, 0.1, 0.25, 0.5, 0.75, 1, 2.5, 5, 7.5, 10 
 | `http.request.method` | string | HTTP request method. [2] | `GET`; `POST`; `HEAD` | Required |
 | `http.response.status_code` | int | [HTTP response status code](https://tools.ietf.org/html/rfc7231#section-6). | `200` | Conditionally Required: If and only if one was received/sent. |
 | `http.route` | string | The matched route (path template in the format used by the respective server framework). See note below [3] | `/users/:userID?`; `{controller}/{action}/{id?}` | Conditionally Required: If and only if it's available |
-| `network.protocol.name` | string | [OSI application layer](https://osi-model.com/application-layer/) or non-OSI equivalent. [4] | `http`; `spdy` | Recommended: if not default (`http`). |
-| `network.protocol.version` | string | Version of the protocol specified in `network.protocol.name`. [5] | `1.0`; `1.1`; `2`; `3` | Recommended |
-| [`server.address`](outbound-service-call.md) | string | Name of the local HTTP server that received the request. [6] | `example.com`; `10.1.2.80`; `/tmp/my.sock` | Opt-In |
-| [`server.port`](outbound-service-call.md) | int | Port of the local HTTP server that received the request. [7] | `80`; `8080`; `443` | Opt-In |
+| [`network.protocol.name`](../general/attributes.md) | string | [OSI application layer](https://osi-model.com/application-layer/) or non-OSI equivalent. [4] | `http`; `spdy` | Recommended: if not default (`http`). |
+| [`network.protocol.version`](../general/attributes.md) | string | Version of the protocol specified in `network.protocol.name`. [5] | `1.0`; `1.1`; `2`; `3` | Recommended |
+| [`server.address`](../general/attributes.md) | string | Name of the local HTTP server that received the request. [6] | `example.com`; `10.1.2.80`; `/tmp/my.sock` | Opt-In |
+| [`server.port`](../general/attributes.md) | int | Port of the local HTTP server that received the request. [7] | `80`; `8080`; `443` | Opt-In |
 | `url.scheme` | string | The [URI scheme](https://www.rfc-editor.org/rfc/rfc3986#section-3.1) component identifying the used protocol. | `http`; `https` | Required |
 
 **[1]:** If the request fails with an error before response status code was sent or received,
