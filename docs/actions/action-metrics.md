@@ -1,6 +1,17 @@
 # Semantic Conventions for Action Metrics
 
+Actions occur within the context of an Web Application. These applications are
+served up via an http server.
+
 ## Metric: `http.server.action.total`
+
+This metric is required.
+
+<!-- semconv metric.http.server.action.total(metric_table) -->
+| Name     | Instrument Type | Unit (UCUM) | Description    |
+| -------- | --------------- | ----------- | -------------- |
+| `http.server.action.total` | Counter | `{action}` | A counter of actions for contrast |
+<!-- endsemconv -->
 
 <!-- semconv metric.http.server.action.total(full) -->
 | Attribute  | Type | Description  | Examples  | Requirement Level |
