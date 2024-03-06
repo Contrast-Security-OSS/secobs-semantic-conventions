@@ -8,6 +8,9 @@
 
 ### Fixes
 
+- fix content gaps and layout. No specifications were changed
+  ([#5](https://github.com/Contrast-Security-OSS/secobs-semantic-conventions/pull/5))
+
 ## v0.2.0 (2024-01-31)
 
 ## Breaking
@@ -15,7 +18,7 @@
 ## Features
 
 - add definitions for authentication and authorization actions.
-  ([#1](https://github.com/Contrast-Security-OSS/secobs-semantic-conventions/pull/2))
+  ([#2](https://github.com/Contrast-Security-OSS/secobs-semantic-conventions/pull/2))
 
 ## Fixes
 
