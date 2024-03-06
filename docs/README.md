@@ -29,3 +29,4 @@ Semantic Conventions are defined for the following areas:
 
 - [General](general/README.md): General Semantic Conventions.
 - [Actions](actions/README.md): Semantic Conventions for Contrast Actions.
+- [HTTP](http/README.md): Semantic Conventions for HTTP client and server operations.
