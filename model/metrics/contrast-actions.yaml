@@ -49,25 +49,15 @@ groups:
             - id: ognl-execution
               value: "ognl-execution"
               brief: "Object-Graph Navigation Language expression execution."
+
   - id: attributes.contrast.action.metric
     extends: attributes.contrast.actions
     type: attribute_group
     brief: "Describes attributes for Contrast Action metrics"
     attributes:
-      - id: http.method
-        type: string
-        requirement_level: required
-        brief: >
-          http method used when the action was encountered.
-        examples:
-          - GET
-          - POST
-      - id: http.route
-        type: string
-        requirement_level: required
-        brief: >
-          http route used when the action was encountered.
-        examples: "/foo/bar"
+      - ref: http.request.method
+      - ref: http.route
+
   - id: metric.http.server.action.total
     type: metric
     extends: attributes.contrast.action.metric

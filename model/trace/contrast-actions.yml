@@ -158,6 +158,7 @@ groups:
             - id: o_rdwr
               value: o_rdwr
               brief: Read/write access
+
   - id: contrast.action.span.host-cmd-exec
     type: span
     brief: >
@@ -169,50 +170,20 @@ groups:
         requirement_level: required
         examples: [ls /foo, bash -c somebin, chmod 755 foobar]
         type: string
+
   - id: contrast.action.span.outbound-service-call
     type: span
     brief: >
       Describes attributes for Contrast Action span of type outbound-service-call.
       These actions are always using the http protocol.
     attributes:
-      - id: http.request.method
-        brief: HTTP request method.
-        type: string
-        requirement_level: required
-        note: >
-           HTTP request method value SHOULD be “known” to the instrumentation.
-           By default, this convention defines “known” methods as the ones
-           listed in [RFC9110](https://www.rfc-editor.org/rfc/rfc9110.html#name-methods)
-           and the PATCH method defined in
-           [RFC5789](https://www.rfc-editor.org/rfc/rfc5789.html).
-        examples: [POST, GET, DELETE]
-      - id: http.response.status_code
-        type: int
-        brief: "[HTTP response status code](https://datatracker.ietf.org/doc/html/rfc7231#section-6)."
+      - ref: http.request.method
+      - ref: http.response.status_code
         requirement_level:
           conditionally_required: if and only if one was received.
-      - id: network.protocol.version
-        brief: Version of the http protocol used.
-        requirement_level: recommended
-        type: string
-        examples: ["1.0", "1.1", "2", "3"]
-        note: >
-          network.protocol.version refers to the version of the protocol used
-          and might be different from the protocol client’s version. If the
-          HTTP client has a version of 0.27.2, but sends HTTP version 1.1, this
-          attribute should be set to 1.1.
-      - id: network.peer.address
-        brief: >
-          Peer address of the network connection - IP address or Unix domain socket name.
-        requirement_level: recommended
-        type: string
-        examples: ["10.1.2.80", /tmp/my.sock]
-      - id: network.peer.port
-        brief: Peer port number of the network connection.
-        requirement_level:
-          recommended: if `network.peer.address` populated
-        type: int
-        examples: [80, 8080, 443]
+      - ref: network.protocol.version
+      - ref: network.peer.address
+      - ref: network.peer.port
       - id: server.address
         brief: >
           Name of the remotely connected host.
@@ -233,27 +204,9 @@ groups:
           When observed from the client side, and when communicating through an
           intermediary, `server.port`` SHOULD represent the server port behind
           any intermediaries, for example proxies, if it’s available.
-      - id: url.full
+      - ref: url.full
         requirement_level: required
-        type: string
-        brief: >
-          Absolute URL describing a network resource according to
-          [RFC3986](https://www.rfc-editor.org/rfc/rfc3986)
-        examples: [
-          "https://www.foo.bar/search?q=OpenTelemetry#SemConv",
-          "//localhost"]
-        note: >
-          For network calls, URL usually has
-          `scheme://host[:port][path][?query][#fragment]` format, where the
-          fragment is not transmitted over HTTP, but if it is known, it SHOULD
-          be included nevertheless. `url.full` MUST NOT contain credentials
-          passed via URL in form of
-          `https://username:password@www.example.com/`.
-          In such case username and password SHOULD be redacted and attribute’s
-          value SHOULD be `https://REDACTED:REDACTED@www.example.com/`.
-          `url.full` SHOULD capture the absolute URL when it is available
-          (or can be reconstructed) and SHOULD NOT be validated or modified
-          except for sanitizing purposes.
+
   - id: attributes.contrast.code-exec
     type: attribute_group
     brief: Attributes that refer to code execution operations

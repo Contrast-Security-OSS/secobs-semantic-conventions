@@ -24,24 +24,54 @@ This span type represents an outbound HTTP request. There are two ways this can 
 <!-- semconv contrast.action.span.outbound-service-call(full) -->
 | Attribute  | Type | Description  | Examples  | Requirement Level |
 |---|---|---|---|---|
-| `http.request.method` | string | HTTP request method. [1] | `POST`; `GET`; `DELETE` | Required |
-| `http.response.status_code` | int | [HTTP response status code](https://datatracker.ietf.org/doc/html/rfc7231#section-6). |  | Conditionally Required: if and only if one was received. |
+| `http.request.method` | string | HTTP request method. [1] | `GET`; `POST`; `HEAD` | Recommended |
+| `http.response.status_code` | int | [HTTP response status code](https://tools.ietf.org/html/rfc7231#section-6). | `200` | Conditionally Required: if and only if one was received. |
 | `network.peer.address` | string | Peer address of the network connection - IP address or Unix domain socket name. | `10.1.2.80`; `/tmp/my.sock` | Recommended |
-| `network.peer.port` | int | Peer port number of the network connection. | `80`; `8080`; `443` | Recommended: if `network.peer.address` populated |
-| `network.protocol.version` | string | Version of the http protocol used. [2] | `1.0`; `1.1`; `2`; `3` | Recommended |
+| `network.peer.port` | int | Peer port number of the network connection. | `65123` | Recommended |
+| `network.protocol.version` | string | Version of the protocol specified in `network.protocol.name`. [2] | `3.1.1` | Recommended |
 | `server.address` | string | Name of the remotely connected host. [3] | `example.com`; `10.1.2.80`; `/tmp/my.sock` | Required |
 | `server.port` | int | Port identifier of the [“URI origin”](https://www.rfc-editor.org/rfc/rfc9110.html#name-uri-origin) HTTP request is sent to. [4] | `80`; `8080`; `443` | Required |
 | `url.full` | string | Absolute URL describing a network resource according to [RFC3986](https://www.rfc-editor.org/rfc/rfc3986) [5] | `https://www.foo.bar/search?q=OpenTelemetry#SemConv`; `//localhost` | Required |
 
-**[1]:** HTTP request method value SHOULD be “known” to the instrumentation. By default, this convention defines “known” methods as the ones listed in [RFC9110](https://www.rfc-editor.org/rfc/rfc9110.html#name-methods) and the PATCH method defined in [RFC5789](https://www.rfc-editor.org/rfc/rfc5789.html).
+**[1]:** HTTP request method value SHOULD be "known" to the instrumentation.
+By default, this convention defines "known" methods as the ones listed in [RFC9110](https://www.rfc-editor.org/rfc/rfc9110.html#name-methods)
+and the PATCH method defined in [RFC5789](https://www.rfc-editor.org/rfc/rfc5789.html).
 
-**[2]:** network.protocol.version refers to the version of the protocol used and might be different from the protocol client’s version. If the HTTP client has a version of 0.27.2, but sends HTTP version 1.1, this attribute should be set to 1.1.
+If the HTTP request method is not known to instrumentation, it MUST set the `http.request.method` attribute to `_OTHER`.
+
+If the HTTP instrumentation could end up converting valid HTTP request methods to `_OTHER`, then it MUST provide a way to override
+the list of known HTTP methods. If this override is done via environment variable, then the environment variable MUST be named
+OTEL_INSTRUMENTATION_HTTP_KNOWN_METHODS and support a comma-separated list of case-sensitive known HTTP methods
+(this list MUST be a full override of the default known method, it is not a list of known methods in addition to the defaults).
+
+HTTP method names are case-sensitive and `http.request.method` attribute value MUST match a known HTTP method name exactly.
+Instrumentations for specific web frameworks that consider HTTP methods to be case insensitive, SHOULD populate a canonical equivalent.
+Tracing instrumentations that do so, MUST also set `http.request.method_original` to the original value.
+
+**[2]:** `network.protocol.version` refers to the version of the protocol used and might be different from the protocol client's version. If the HTTP client used has a version of `0.27.2`, but sends HTTP version `1.1`, this attribute should be set to `1.1`.
 
 **[3]:** If an HTTP client request is explicitly made to an IP address, e.g. `http://x.x.x.x:8080`, then server.address SHOULD be the IP address x.x.x.x. A DNS lookup SHOULD NOT be used.
 
 **[4]:** When observed from the client side, and when communicating through an intermediary, `server.port`` SHOULD represent the server port behind any intermediaries, for example proxies, if it’s available.
 
-**[5]:** For network calls, URL usually has `scheme://host[:port][path][?query][#fragment]` format, where the fragment is not transmitted over HTTP, but if it is known, it SHOULD be included nevertheless. `url.full` MUST NOT contain credentials passed via URL in form of `https://username:password@www.example.com/`. In such case username and password SHOULD be redacted and attribute’s value SHOULD be `https://REDACTED:REDACTED@www.example.com/`. `url.full` SHOULD capture the absolute URL when it is available (or can be reconstructed) and SHOULD NOT be validated or modified except for sanitizing purposes.
+**[5]:** For network calls, URL usually has `scheme://host[:port][path][?query][#fragment]` format, where the fragment is not transmitted over HTTP, but if it is known, it should be included nevertheless.
+`url.full` MUST NOT contain credentials passed via URL in form of `https://username:password@www.example.com/`. In such case username and password should be redacted and attribute's value should be `https://REDACTED:REDACTED@www.example.com/`.
+`url.full` SHOULD capture the absolute URL when it is available (or can be reconstructed) and SHOULD NOT be validated or modified except for sanitizing purposes.
+
+`http.request.method` has the following list of well-known values. If one of them applies, then the respective value MUST be used, otherwise a custom value MAY be used.
+
+| Value  | Description |
+|---|---|
+| `CONNECT` | CONNECT method. |
+| `DELETE` | DELETE method. |
+| `GET` | GET method. |
+| `HEAD` | HEAD method. |
+| `OPTIONS` | OPTIONS method. |
+| `PATCH` | PATCH method. |
+| `POST` | POST method. |
+| `PUT` | PUT method. |
+| `TRACE` | TRACE method. |
+| `_OTHER` | Any HTTP method that the instrumentation has no prior knowledge of. |
 <!-- endsemconv -->
 
 ## outbound-service-call (http client) span duration
