@@ -207,15 +207,15 @@ Note that `network.local.*` attributes are not included in these examples since 
 
 ###### Simple client/server example
 
-![simple.png](simple.png)
+![simple.png](/docs/general/simple.png "Simple")
 
 ###### Client/server example with reverse proxy
 
-![reverse-proxy.png](reverse-proxy.png)
+![reverse-proxy.png](/docs/general/reverse-proxy.png "Reverse Proxy")
 
 ###### Client/server example with forward proxy
 
-![forward-proxy.png](forward-proxy.png)
+![forward-proxy.png](/docs/general/forward-proxy.png "Forward Proxy")
 
 ## General remote service attributes
 

@@ -118,8 +118,8 @@ See:
 Markdown files should be properly formatted before a pull request is sent out.
 In this repository we follow the
 [markdownlint rules](https://github.com/DavidAnson/markdownlint#rules--aliases)
-with some customizations. See [markdownlint](.markdownlint.yaml) or
-[settings](.vscode/settings.json) for details.
+with some customizations. See [markdownlint](/.markdownlint.yaml) or
+[settings](/.vscode/settings.json) for details.
 
 We highly encourage to use line breaks in markdown files at `80` characters
 wide. There are tools that can do it for you effectively. Please submit proposal
@@ -162,8 +162,8 @@ make misspell-correction
 A PR (pull request) is considered to be **ready to merge** when:
 
 - It has received at least two approvals from the [code
-  owners](./.github/CODEOWNERS)
-- There is no `request changes` from the [code owners](./.github/CODEOWNERS).
+  owners](/.github/CODEOWNERS)
+- There is no `request changes` from the [code owners](/.github/CODEOWNERS).
 
 ## Updating the referenced specification version
 
