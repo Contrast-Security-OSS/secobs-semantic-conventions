@@ -191,12 +191,14 @@ groups:
           "#{20 - 1}",
           "'Just a string value'.substring(5)"
         ]
+
   - id: contrast.action.span.el-execution
     type: span
     extends: attributes.contrast.code-exec
     brief: >
       Describes attributes for Contrast Action span of type el-execution. The Spring Expression Language (SpEL for short) is a
       powerful expression language that supports querying and manipulating an object graph at runtime.
+
   - id: contrast.action.span.ognl-execution
     extends: attributes.contrast.code-exec
     type: span
@@ -204,3 +206,44 @@ groups:
       Describes attributes for Contrast Action span of type ognl-execution. OGNL stands for Object-Graph Navigation Language.
       It is an expression language for getting and setting properties of Java objects, plus other extras such as list projection
       and selection and lambda expressions. You use the same expression for both getting and setting the value of a property.
+
+  - id: contrast.action.span.security-control
+    type: span
+    brief: >
+      Describes attributes for Contrast Action span of type security-control.
+    attributes:
+      - id: method
+        brief: >
+          The method of the custom security control.
+        requirement_level: required
+        examples: [ com.Acme.OldSecurity.DoLegacySecurity ]
+        type: string
+      - id: name
+        brief: >
+          The name of the custom security control.
+        requirement_level: recommended
+        examples: [ "My Custom Security Control" ]
+        type: string
+      - id: rules
+        brief: >
+          The rules applicable to the custom security control.
+        requirement_level: recommended
+        examples: [ reflected-xss; path-traversal ]
+        type: string
+      - id: type
+        brief: >
+          The custom security control type.
+        requirement_level: recommended
+        examples: [ sanitizer; input-validator ]
+        type:
+          allow_custom_values: false
+          members:
+            - id: sanitizer
+              value: sanitizer
+              brief: Sanitizer
+            - id: input-validator
+              value: input-validator
+              brief: Input Validator
+            - id: regex-validator
+              value: regex-validator
+              brief: Regex Validator

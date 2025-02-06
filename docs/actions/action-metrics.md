@@ -57,6 +57,7 @@ SHOULD include the [application root](/docs/http/http-spans.md#http-server-defin
 | `authz-request` | Functions that perform authorization actions |
 | `el-execution` | Spring expression language execution |
 | `ognl-execution` | Object-Graph Navigation Language expression execution. |
+| `security-control` | Custom security controls defined by the user. |
 
 `http.request.method` has the following list of well-known values. If one of them applies, then the respective value MUST be used, otherwise a custom value MAY be used.
 

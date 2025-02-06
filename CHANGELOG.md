@@ -8,6 +8,17 @@
 
 ### Fixes
 
+## v0.4.0 (2024-12-17)
+
+### Breaking
+
+### Features
+
+- add definitions for custom security control actions.
+  ([#8](https://github.com/Contrast-Security-OSS/secobs-semantic-conventions/pull/8))
+
+### Fixes
+
 ## v0.3.0 (2024-03-06)
 
 ### Breaking

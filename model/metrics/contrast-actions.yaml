@@ -49,6 +49,9 @@ groups:
             - id: ognl-execution
               value: "ognl-execution"
               brief: "Object-Graph Navigation Language expression execution."
+            - id: security-control
+              value: "security-control"
+              brief: "Custom security controls defined by the user."
 
   - id: attributes.contrast.action.metric
     extends: attributes.contrast.actions
