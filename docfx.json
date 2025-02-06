@@ -1,7 +1,10 @@
 {
-  "files": "**/*.{md,png}",
-  "warningsAsErrors": true,
-  "rules": {
-    "link-out-of-scope": "off"
+  "build": {
+    "content": [
+      {"files": "**/*.md"}
+    ],
+    "resource": [
+      {"files":  "**/*.png"}
+    ]
   }
 }
