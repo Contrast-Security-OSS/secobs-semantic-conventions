@@ -8,7 +8,7 @@
 
 ### Fixes
 
-## v0.4.0 (2024-12-17)
+## v0.4.0 (2025-02-07)
 
 ### Breaking
 
@@ -18,6 +18,9 @@
   ([#8](https://github.com/Contrast-Security-OSS/secobs-semantic-conventions/pull/8))
 
 ### Fixes
+
+- various pipeline fixes necessitated by changes external to Contrast.
+  ([#9](https://github.com/Contrast-Security-OSS/secobs-semantic-conventions/pull/9))
 
 ## v0.3.0 (2024-03-06)
 
